@@ -82,7 +82,9 @@ public class SpotifyRepository {
 
              return album;
         }else{
-            Album album=new Album(title);
+            Album album=new Album();
+            album.setTitle(title);
+            album.setReleaseDate(new Date());
 
             List<Album> albums1=new ArrayList<>();
 
@@ -104,7 +106,9 @@ public class SpotifyRepository {
     }
 
     public Song createSong(String title, String albumName, int length) throws Exception{
-        Album album=new Album(albumName);
+        Album album=new Album();
+        album.setTitle(albumName);
+        album.setReleaseDate(new Date());
         Song song =new Song (title,length);
         if(!albums.contains(album)){
             throw new Exception("Album does not exist");
@@ -436,7 +440,6 @@ public class SpotifyRepository {
                          album = album1;
                          break;
                      }
-
                  }
              }
 
