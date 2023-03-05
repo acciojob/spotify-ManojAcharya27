@@ -174,55 +174,47 @@ public class SpotifyRepository {
     }
 
     public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
-
-
-        User user=null;
-        for(User user1:users){
-            if(user1.getMobile()==mobile){
-                user=user1;
+        User user = null;
+        for (User user1 : users) {
+            if (user1.getMobile() == mobile) {
+                user = user1;
                 break;
             }
         }
-
-        if(user==null) {
+        if (user == null)
             throw new Exception("User does not exist");
-        }
         else {
-            Playlist playlist=new Playlist(title);
-
+            Playlist playlist = new Playlist();
+            playlist.setTitle(title);
             playlists.add(playlist);
 
-            List<Song> songList=new ArrayList<>();
-
-            for(Song song: songs){
-                if(songTitles.contains(song.getTitle())){
-                    songList.add(song);
+            List<Song> list = new ArrayList<>();
+            for (Song song : songs) {
+                if (songTitles.contains(song.getTitle())) {
+                    list.add(song);
                 }
             }
+            playlistSongMap.put(playlist, list);
 
-            playlistSongMap.put(playlist,songList);
+            List<User> userList = new ArrayList<>();
+            userList.add(user);
+            playlistListenerMap.put(playlist, userList);
 
-            creatorPlaylistMap.put(user,playlist);
+            creatorPlaylistMap.put(user, playlist);
 
-
-            if(userPlaylistMap.containsKey(user)){
-                List<Playlist> playlistList=new ArrayList<>();
-                playlistList=userPlaylistMap.get(user);
-                playlistList.add(playlist);
-                userPlaylistMap.put(user,playlistList);
-            }else {
-                List<Playlist> playlistList=new ArrayList<>();
-                playlistList.add(playlist);
-                userPlaylistMap.put(user,playlistList);
+            if (userPlaylistMap.containsKey(user)) {
+                List<Playlist> userPlayList = userPlaylistMap.get(user);
+                userPlayList.add(playlist);
+                userPlaylistMap.put(user, userPlayList);
+            } else {
+                List<Playlist> plays = new ArrayList<>();
+                plays.add(playlist);
+                userPlaylistMap.put(user, plays);
             }
-
 
             return playlist;
 
-
         }
-
-
     }
 
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
