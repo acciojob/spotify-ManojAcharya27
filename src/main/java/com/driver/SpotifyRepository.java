@@ -377,17 +377,18 @@ public class SpotifyRepository {
                  songLikeMap.put(song2,userList);
 
                  Album album=null;
+                if(artistAlbumMap.size()!=0) {
+                    for (Album album1 : albumSongMap.keySet()) {
 
-                 for (Album album1 :albumSongMap.keySet()){
+                        List<Song> songList = new ArrayList<>();
+                        songList = albumSongMap.get(album1);
+                        if (songList.contains(song2)) {
+                            album = album1;
+                            break;
+                        }
 
-                     List<Song> songList=new ArrayList<>();
-                     songList=albumSongMap.get(album1);
-                     if(songList.contains(song2)){
-                         album=album1;
-                         break;
-                     }
-
-                 }
+                    }
+                }
                  Artist artist=null;
                  for (Artist artist1: artistAlbumMap.keySet()){
                      List<Album> albumList=artistAlbumMap.get(artist1);
@@ -415,15 +416,17 @@ public class SpotifyRepository {
 
 
              Album album=null;
-             for (Album album1 :albumSongMap.keySet()){
+             if(albumSongMap.size()!=0) {
+                 for (Album album1 : albumSongMap.keySet()) {
 
-                 List<Song> songList=new ArrayList<>();
-                 songList=albumSongMap.get(album1);
-                 if(songList.contains(song2)){
-                     album=album1;
-                     break;
+                     List<Song> songList = new ArrayList<>();
+                     songList = albumSongMap.get(album1);
+                     if (songList.contains(song2)) {
+                         album = album1;
+                         break;
+                     }
+
                  }
-
              }
 
              Artist artist=null;
@@ -446,10 +449,12 @@ public class SpotifyRepository {
     public String mostPopularArtist() {
        Artist artist=null;
        int max=0;
-       for (Artist artist1: artists){
-           if(artist1.getLikes()>=max){
-               max=artist1.getLikes();
-               artist=artist1;
+       if(artists.size()!=0) {
+           for (Artist artist1 : artists) {
+               if (artist1.getLikes() >= max) {
+                   max = artist1.getLikes();
+                   artist = artist1;
+               }
            }
        }
        if(artist==null) return null;
