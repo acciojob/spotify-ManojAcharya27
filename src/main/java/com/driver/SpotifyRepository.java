@@ -55,23 +55,39 @@ public class SpotifyRepository {
         Artist artist=new Artist(artistName);
         if(!artists.contains(artist)){
            // Artist artist=new Artist(artistName);
-            artists.add(artist);
+
             Album album=new Album(title);
+
             albums.add(album);
+
             List<Album> albums1=new ArrayList<>();
+
             if(artistAlbumMap.containsKey(artist)) {
                 albums1 = artistAlbumMap.get(artist);
              }
-           albums1.add(album);
-           artistAlbumMap.put(artist,albums1);
+
+             albums1.add(album);
+
+             artistAlbumMap.put(artist,albums1);
+
+             return album;
         }else{
-            List<Album> albums1=artistAlbumMap.get(artists);
             Album album=new Album(title);
+
+            List<Album> albums1=new ArrayList<>();
+
+
+            if(artistAlbumMap.containsKey(artist)) {
+                albums1 = artistAlbumMap.get(artists);
+            }
+
             albums1.add(album);
+
             artistAlbumMap.put(artist,albums1);
+
+
+            return album;
         }
-         Album album=new Album(title);
-         return album;
     }
 
     public Song createSong(String title, String albumName, int length) throws Exception{
@@ -82,10 +98,13 @@ public class SpotifyRepository {
         }else{
             songs.add(song);
             List<Song> songs1=new ArrayList<>();
+
             if(albumSongMap.containsKey(album)){
                 songs1=albumSongMap.get(album);
             }
+
             songs1.add(song);
+
             albumSongMap.put(album,songs1);
         }
         return song;
@@ -129,29 +148,49 @@ public class SpotifyRepository {
                     }
                 }
                 if(!flag) throw new Exception("User does not exist");
-                for (Song song: songs){
-                    int lengthOfSong=song.getLength();
-                    if(lengthOfSong==length){
-                        List<Song> songList=new ArrayList<>();
-                        if(playlistSongMap.containsKey(playlist)){
-                            songList=playlistSongMap.get(playlist);
+                else {
+                    List<Song> songList=new ArrayList<>();
+                    for (Song song : songs) {
+
+                        int lengthOfSong = song.getLength();
+
+                        if (lengthOfSong == length) {
+                            songList.add(song);
                         }
-                        songList.add(song);
-                        playlistSongMap.put(playlist,songList);
+
+                    }
+                    playlistSongMap.put(playlist,songList);
+
+                    List<User> usersList=new ArrayList<>();
+
+                    usersList.add(user1);
+
+                    playlistListenerMap.put(playlist,usersList);
+
+                    creatorPlaylistMap.put(user1,playlist);
+
+                    List<Playlist> playlistList=new ArrayList<>();
+
+                    if(userPlaylistMap.containsKey(user1)){
+                        playlistList=userPlaylistMap.get(user1);
                     }
 
+                    playlistList.add(playlist);
+
+                    userPlaylistMap.put(user1,playlistList);
+
+                    return playlist;
                 }
-                return  playlist;
 
     }
 
     public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
-        Playlist playlist=new Playlist(title);
+       /* Playlist playlist=new Playlist(title);
         boolean flag=false;
         for(User user: users){
 
 
-            String mobileNo=user.getMobile(); // mobile no ofuser
+            String mobileNo=user.getMobile(); // mobile no of user
 
             if(mobileNo.equals(mobile)){ // if mobile no matches given no i.e user exist
                 flag=true; // user exist
@@ -186,7 +225,51 @@ public class SpotifyRepository {
             }
         }
         if(flag) return  playlist;
-        else throw new Exception("User does not exist");
+        else throw new Exception("User does not exist");*/
+
+        User user=null;
+        boolean flag=false;
+
+        for (User user1: users){
+            if(user1.getMobile().equals(mobile)){
+                flag=true;
+                user=user1;
+                break;
+            }
+        }
+        if(!flag) throw new Exception("User does not exist");
+        else {
+            Playlist playlist=new Playlist(title);
+
+            playlists.add(playlist);
+
+            List<Song> songList=new ArrayList<>();
+
+            for(Song song: songs){
+                if(songTitles.contains(song.getTitle())){
+                    songList.add(song);
+                }
+            }
+
+            playlistSongMap.put(playlist,songList);
+
+            creatorPlaylistMap.put(user,playlist);
+
+            List<Playlist> playlistList=new ArrayList<>();
+
+            if(userPlaylistMap.containsKey(user)){
+                playlistList=userPlaylistMap.get(user);
+            }
+
+            playlistList.add(playlist);
+
+            userPlaylistMap.put(user,playlistList);
+
+            return playlist;
+
+
+        }
+
 
     }
 
