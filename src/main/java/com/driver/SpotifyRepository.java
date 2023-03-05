@@ -65,37 +65,34 @@ public class SpotifyRepository {
 
         if(artist==null){
            // Artist artist=new Artist(artistName);
-           artist=new Artist(artistName);
+            artist = createArtist(artistName);
 
-            Album album=new Album();
+            Album album = new Album();
+
             album.setTitle(title);
             album.setReleaseDate(new Date());
-
 
             albums.add(album);
 
-            List<Album> albums1=new ArrayList<>();
+            List<Album> list= new ArrayList<>();
+            list.add(album);
+            artistAlbumMap.put(artist,list);
 
-             albums1.add(album);
-
-             artistAlbumMap.put(artist,albums1);
-
-             return album;
+            return album;
         }else{
-            Album album=new Album();
+            Album album = new Album();
+
             album.setTitle(title);
             album.setReleaseDate(new Date());
 
-            List<Album> albums1= artistAlbumMap.get(artists);
+            albums.add(album);
 
-            if(albums1==null){
-                albums1=new ArrayList<>();
+            List<Album> list = artistAlbumMap.get(artist);
+            if(list == null){
+                list = new ArrayList<>();
             }
-
-            albums1.add(album);
-
-            artistAlbumMap.put(artist,albums1);
-
+            list.add(album);
+            artistAlbumMap.put(artist,list);
 
             return album;
         }
