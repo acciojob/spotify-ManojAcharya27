@@ -177,15 +177,16 @@ public class SpotifyRepository {
 
 
         User user=null;
-
-        for (User user1: users){
+        for(User user1:users){
             if(user1.getMobile()==mobile){
                 user=user1;
                 break;
             }
         }
 
-        if(user==null) throw new Exception("User does not exist");
+        if(user==null) {
+            throw new Exception("User does not exist");
+        }
         else {
             Playlist playlist=new Playlist(title);
 
