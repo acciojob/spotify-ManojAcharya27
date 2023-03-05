@@ -80,7 +80,6 @@ public class SpotifyRepository {
         if(!albums.contains(album)){
             throw new Exception("Album does not exist");
         }else{
-            albums.add(album);
             songs.add(song);
             List<Song> songs1=new ArrayList<>();
             if(albumSongMap.containsKey(album)){
@@ -88,7 +87,6 @@ public class SpotifyRepository {
             }
             songs1.add(song);
             albumSongMap.put(album,songs1);
-
         }
         return song;
     }
@@ -96,7 +94,7 @@ public class SpotifyRepository {
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
                  Playlist playlist=new Playlist(title);
                  boolean flag=false;
-                 for(User user: users){
+                 /*for(User user: users){
                      String mobileNo=user.getMobile();
                      if(mobileNo.equals(mobileNo)){
                          creatorPlaylistMap.put(user,playlist);
@@ -122,8 +120,28 @@ public class SpotifyRepository {
                      }
                  }
                  if(flag) return playlist;
-                 else  throw new Exception("User does not exist");
+                 else  throw new Exception("User does not exist");*/
+                 User user1=null;
+                for(User user: users){
+                    if(user.getMobile().equals(mobile)){
+                        user1=user;
+                        flag=true;
+                    }
+                }
+                if(!flag) throw new Exception("User does not exist");
+                for (Song song: songs){
+                    int lengthOfSong=song.getLength();
+                    if(lengthOfSong==length){
+                        List<Song> songList=new ArrayList<>();
+                        if(playlistSongMap.containsKey(playlist)){
+                            songList=playlistSongMap.get(playlist);
+                        }
+                        songList.add(song);
+                        playlistSongMap.put(playlist,songList);
+                    }
 
+                }
+                return  playlist;
 
     }
 
@@ -212,6 +230,7 @@ public class SpotifyRepository {
     }
 
     public Song likeSong(String mobile, String songTitle) throws Exception {
+
         Song song2 = null;
         Playlist playlist;
         User user1=null;
