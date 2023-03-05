@@ -214,11 +214,13 @@ public class SpotifyRepository {
     public Song likeSong(String mobile, String songTitle) throws Exception {
         Song song2 = null;
         Playlist playlist;
+        User user1=null;
         boolean flag=false;
         for(User user: users){
             String mblNo=user.getMobile();
             if(mblNo.equals(mobile)){
                 flag=true;
+                user1=user;
                 playlist=creatorPlaylistMap.get(user);
                 break;
             }
@@ -231,10 +233,17 @@ public class SpotifyRepository {
              if(song.getTitle().equals(songTitle)){
                   song2=song;
                   flag2=true;
+                 List<User> userList=new ArrayList<>();
+                 if(songLikeMap.containsKey(song)){
+                    userList=songLikeMap.get(song);
+                 }
                  if(!songLikeMap.containsKey(song)) {
                      int songLike = song.getLikes();
                      songLike++;
                      song.setLikes(songLike);
+                     userList.add(user1);
+                     songLikeMap.put(song,userList);
+
 
 
                  }
