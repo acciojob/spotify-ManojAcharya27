@@ -113,6 +113,11 @@ public class SpotifyRepository {
             if(albumSongMap.containsKey(album)){
                 List<Song> songList=new ArrayList<>();
                 songList=albumSongMap.get(album);
+                songList.add(song);
+                albumSongMap.put(album,songList);
+            }else {
+                List<Song> songList=new ArrayList<>();
+                songList.add(song);
                 albumSongMap.put(album,songList);
             }
         }
@@ -178,15 +183,16 @@ public class SpotifyRepository {
 
                     creatorPlaylistMap.put(user1,playlist);
 
-                    List<Playlist> playlistList=new ArrayList<>();
-
-                    if(userPlaylistMap.containsKey(user1)){
-                        playlistList=userPlaylistMap.get(user1);
-                    }
-
-                    playlistList.add(playlist);
-
-                    userPlaylistMap.put(user1,playlistList);
+                   if(userPlaylistMap.containsKey(user1)){
+                       List<Playlist> playlistList=new ArrayList<>();
+                       playlistList=userPlaylistMap.get(user1);
+                       playlistList.add(playlist);
+                       userPlaylistMap.put(user1,playlistList);
+                   }else {
+                       List<Playlist> playlistList=new ArrayList<>();
+                       playlistList.add(playlist);
+                       userPlaylistMap.put(user1,playlistList);
+                   }
 
                     return playlist;
                 }
@@ -264,15 +270,18 @@ public class SpotifyRepository {
 
             creatorPlaylistMap.put(user,playlist);
 
-            List<Playlist> playlistList=new ArrayList<>();
 
             if(userPlaylistMap.containsKey(user)){
+                List<Playlist> playlistList=new ArrayList<>();
                 playlistList=userPlaylistMap.get(user);
+                playlistList.add(playlist);
+                userPlaylistMap.put(user,playlistList);
+            }else {
+                List<Playlist> playlistList=new ArrayList<>();
+                playlistList.add(playlist);
+                userPlaylistMap.put(user,playlistList);
             }
 
-            playlistList.add(playlist);
-
-            userPlaylistMap.put(user,playlistList);
 
             return playlist;
 
