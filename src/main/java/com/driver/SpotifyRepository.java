@@ -55,7 +55,10 @@ public class SpotifyRepository {
     }
 
     public Album createAlbum(String title, String artistName) {
-        Artist artist=new Artist(artistName);
+        Artist artist=new Artist();
+
+        artist.setName(artistName);
+
         if(!artists.contains(artist)){
            // Artist artist=new Artist(artistName);
 
@@ -337,25 +340,29 @@ public class SpotifyRepository {
         Playlist playlist;
         User user1=null;
         boolean flag=false;
-        for(User user: users){
-            String mblNo=user.getMobile();
-            if(mblNo.equals(mobile)){
-                flag=true;
-                user1=user;
-                playlist=creatorPlaylistMap.get(user);
-                break;
+        if(users.size()!=0) {
+            for (User user : users) {
+                String mblNo = user.getMobile();
+                if (mblNo.equals(mobile)) {
+                    flag = true;
+                    user1 = user;
+                    playlist = creatorPlaylistMap.get(user);
+                    break;
+                }
             }
         }
         if(!flag){
             throw new Exception("User does not exist");
         }
       boolean flag2=false;
-         for(Song song: songs){
-             if(song.getTitle().equals(songTitle)){
-                  song2=song;
-                  flag2=true;
-             }
-         }
+        if(songs.size()!=0) {
+            for (Song song : songs) {
+                if (song.getTitle().equals(songTitle)) {
+                    song2 = song;
+                    flag2 = true;
+                }
+            }
+        }
          if(!flag2) throw new Exception("Song does not exist");
 
          if(songLikeMap.containsKey(song2)){
