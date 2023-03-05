@@ -374,7 +374,7 @@ public class SpotifyRepository {
 
          if(songLikeMap.containsKey(song2)){
              List<User> userList=songLikeMap.get(song2);
-             if(userList.contains(user1)){
+             if(userList.size()!=0&&userList.contains(user1)){
                  return song2;
              }else {
                  int likes=song2.getLikes();
@@ -388,7 +388,9 @@ public class SpotifyRepository {
                     for (Album album1 : albumSongMap.keySet()) {
 
                         List<Song> songList = new ArrayList<>();
-                        songList = albumSongMap.get(album1);
+                        if(albumSongMap.containsKey(album1)) {
+                            songList = albumSongMap.get(album1);
+                        }
                         if (songList.contains(song2)) {
                             album = album1;
                             break;
@@ -427,7 +429,9 @@ public class SpotifyRepository {
                  for (Album album1 : albumSongMap.keySet()) {
 
                      List<Song> songList = new ArrayList<>();
-                     songList = albumSongMap.get(album1);
+                     if(albumSongMap.containsKey(album1)) {
+                         songList = albumSongMap.get(album1);
+                     }
                      if (songList.contains(song2)) {
                          album = album1;
                          break;
