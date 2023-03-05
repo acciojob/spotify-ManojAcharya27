@@ -121,8 +121,9 @@ public class SpotifyRepository {
                 songList.add(song);
                 albumSongMap.put(album,songList);
             }
+            return song;
         }
-        return song;
+
     }
 
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
