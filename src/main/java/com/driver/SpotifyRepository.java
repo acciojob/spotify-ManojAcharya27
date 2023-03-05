@@ -127,42 +127,16 @@ public class SpotifyRepository {
     }
 
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
-                 boolean flag=false;
-                 /*for(User user: users){
-                     String mobileNo=user.getMobile();
-                     if(mobileNo.equals(mobileNo)){
-                         creatorPlaylistMap.put(user,playlist);
-                         List<Playlist> playlists=new ArrayList<>();
-                         if(userPlaylistMap.containsKey(user)){
-                             playlists=userPlaylistMap.get(user);
-                         }
-                         playlists.add(playlist);
-                         userPlaylistMap.put(user,playlists);
-                         flag=true;
-                        for(Song song: songs){
-                            int len=song.getLength();
-                            if(len==length){
-                                List<Song> songs1=new ArrayList<>();
-                                if(playlistSongMap.containsKey(playlist)){
-                                    songs1=playlistSongMap.get(playlist);
-                                }
-                                songs1.add(song);
-                                playlistSongMap.put(playlist,songs1);
-                            }
 
-                        }
-                     }
-                 }
-                 if(flag) return playlist;
-                 else  throw new Exception("User does not exist");*/
                  User user1=null;
                 for(User user: users){
-                    if(user.getMobile().equals(mobile)){
+                    if(user.getMobile()==mobile){
                         user1=user;
-                        flag=true;
                     }
                 }
-                if(user1==null) throw new Exception("User does not exist");
+                if(user1==null) {
+                    throw new Exception("User does not exist");
+                }
                 else {
                     Playlist playlist=new Playlist();
                     playlist.setTitle(title);
