@@ -99,11 +99,11 @@ public class SpotifyRepository {
     }
 
     public Song createSong(String title, String albumName, int length) throws Exception{
-        Album album=new Album();
-        Album album1=null;
+        Album album=null;
         for (Album album2:albums){
             if(album2.getTitle()==albumName){
                 album=album2;
+                break;
             }
         }
         if(album==null){
