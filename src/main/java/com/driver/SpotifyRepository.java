@@ -164,7 +164,9 @@ public class SpotifyRepository {
                 }
                 if(user1==null) throw new Exception("User does not exist");
                 else {
-                    Playlist playlist=new Playlist(title);
+                    Playlist playlist=new Playlist();
+                    playlist.setTitle(title);
+
                     playlists.add(playlist);
 
                     List<Song> songList=new ArrayList<>();
@@ -201,51 +203,10 @@ public class SpotifyRepository {
 
                     return playlist;
                 }
-
     }
 
     public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
-       /* Playlist playlist=new Playlist(title);
-        boolean flag=false;
-        for(User user: users){
 
-
-            String mobileNo=user.getMobile(); // mobile no of user
-
-            if(mobileNo.equals(mobile)){ // if mobile no matches given no i.e user exist
-                flag=true; // user exist
-
-
-                creatorPlaylistMap.put(user,playlist);
-
-                List<Playlist> playlists=new ArrayList<>();
-
-                if(userPlaylistMap.containsKey(user)){
-                    playlists=userPlaylistMap.get(user);
-                }
-
-                playlists.add(playlist);
-                userPlaylistMap.put(user,playlists);
-
-
-
-                for(Song song: songs ){
-                    for(String name: songTitles){
-                        if(song.getTitle().equals(name)){
-                            List<Song> songs1=new ArrayList<>();
-                            if(playlistSongMap.containsKey(playlist)){
-                                songs1=playlistSongMap.get(playlist);
-                            }
-                            songs1.add(song);
-                            playlistSongMap.put(playlist,songs1);
-                        }
-                    }
-                }
-
-            }
-        }
-        if(flag) return  playlist;
-        else throw new Exception("User does not exist");*/
 
         User user=null;
 
