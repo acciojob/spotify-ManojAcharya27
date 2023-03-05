@@ -67,8 +67,8 @@ public class SpotifyRepository {
            // Artist artist=new Artist(artistName);
            artist=new Artist(artistName);
 
-            Album album=new Album(title);
-
+            Album album=new Album();
+            album.setTitle(title);
             album.setReleaseDate(new Date());
 
 
@@ -86,12 +86,8 @@ public class SpotifyRepository {
             album.setTitle(title);
             album.setReleaseDate(new Date());
 
-            List<Album> albums1=new ArrayList<>();
+            List<Album> albums1= artistAlbumMap.get(artists);
 
-
-            if(artistAlbumMap.containsKey(artist)) {
-                albums1 = artistAlbumMap.get(artists);
-            }
             if(albums1==null){
                 albums1=new ArrayList<>();
             }
@@ -114,15 +110,11 @@ public class SpotifyRepository {
             throw new Exception("Album does not exist");
         }else{
             songs.add(song);
-            List<Song> songs1=new ArrayList<>();
-
             if(albumSongMap.containsKey(album)){
-                songs1=albumSongMap.get(album);
+                List<Song> songList=new ArrayList<>();
+                songList=albumSongMap.get(album);
+                albumSongMap.put(album,songList);
             }
-
-            songs1.add(song);
-
-            albumSongMap.put(album,songs1);
         }
         return song;
     }
