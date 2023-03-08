@@ -184,6 +184,7 @@ public class SpotifyRepository {
         if (user == null)
             throw new Exception("User does not exist");
         else {
+
             Playlist playlist = new Playlist();
             playlist.setTitle(title);
             playlists.add(playlist);

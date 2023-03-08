@@ -68,7 +68,7 @@ public class SpotifyController {
         //If the playlist does not exists, throw "Playlist does not exist" exception
         // Return the playlist after updating
          spotifyService.findPlaylist(mobile,playlistTitle);
-        return "Success";
+         return "Success";
     }
 
     @PutMapping("/like-song")
